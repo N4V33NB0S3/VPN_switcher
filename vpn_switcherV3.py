@@ -13,9 +13,64 @@ log.setLevel(logging.INFO)
 
 # Countries with good P2P support (your original list)
 P2P_OPTIMIZED_COUNTRIES = [
-    'nl', 'ch', 'se', 'es', 'ro', 'hk', 'sg', 'is',
-    'lk', 'fr', 'ca', 'uk', 'us', 'fi', 'no', 'dk'
+    'nl', # Netherlands
+    'ch', # Switzerland
+    'se', # Sweden
+    'es', # Spain
+    'ro', # Romania
+    'hk', # Hong_Kong
+    'sg', # Singapore
+    'is', # Iceland
+    'fr', # France
+    'ca', # Canada
+    'uk', # United_Kingdom
+    'us', # United_States
+    'fi', # Finland
+    'no', # Norway
+    'dk', # Denmark
+    'at', # Austria
+    'au', # Australia
+    'be', # Belgium
+    'br', # Brazil
+    'cz', # Czech_Republic (often 'cz' is the code, let's stick to that for simplicity)
+    'de', # Germany
+    'ie', # Ireland
+    'it', # Italy
+    'jp', # Japan
+    'kr', # South_Korea (often 'kr' is the code)
+    'mx', # Mexico
+    'nz', # New_Zealand
+    'pl', # Poland
+    'pt', # Portugal
+    'za', # South_Africa
+    'cl', # Chile
+    'co', # Colombia
+    'ee', # Estonia
+    'gr', # Greece
+    'hu', # Hungary
+    'lv', # Latvia
+    'lt', # Lithuania
+    'lu', # Luxembourg
+    'my', # Malaysia
+    'md', # Moldova
+    'nz', # New_Zealand (already added above, removed duplicate)
+    'rs', # Serbia
+    'sk', # Slovakia
+    'si', # Slovenia
+    'tw', # Taiwan
+    'th', # Thailand
+    'ua', # Ukraine
+    'ae', # United_Arab_Emirates
+    'vn', # Vietnam
+    'lk', # Srilanka
+    'ar', # Argentina
+    'pe', # Peru
+    'ph', # Philippines
+    'pa'  # Panama
 ]
+
+# Ensure no duplicates and keep it sorted for consistency (optional, but good practice)
+P2P_OPTIMIZED_COUNTRIES = sorted(list(set(P2P_OPTIMIZED_COUNTRIES)))
 
 def setup_nordvpn_settings():
     """Sets initial NordVPN configuration for torrenting."""
