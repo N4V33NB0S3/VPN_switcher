@@ -11,7 +11,7 @@ log = logging.getLogger('vpn_switcher')
 log.addHandler(JournalHandler())
 log.setLevel(logging.INFO)
 
-# Countries with good P2P support (your original list)
+# Countries with good P2P support (as per nordvpn countries cmd)
 P2P_OPTIMIZED_COUNTRIES = [
     'nl', # Netherlands
     'ch', # Switzerland
@@ -32,12 +32,12 @@ P2P_OPTIMIZED_COUNTRIES = [
     'au', # Australia
     'be', # Belgium
     'br', # Brazil
-    'cz', # Czech_Republic (often 'cz' is the code, let's stick to that for simplicity)
+    'cz', # Czech_Republic
     'de', # Germany
     'ie', # Ireland
     'it', # Italy
     'jp', # Japan
-    'kr', # South_Korea (often 'kr' is the code)
+    'kr', # South_Korea
     'mx', # Mexico
     'nz', # New_Zealand
     'pl', # Poland
@@ -52,8 +52,7 @@ P2P_OPTIMIZED_COUNTRIES = [
     'lt', # Lithuania
     'lu', # Luxembourg
     'my', # Malaysia
-    'md', # Moldova
-    'nz', # New_Zealand (already added above, removed duplicate)
+    'nz', # New_Zealand 
     'rs', # Serbia
     'sk', # Slovakia
     'si', # Slovenia
@@ -73,12 +72,26 @@ P2P_OPTIMIZED_COUNTRIES = [
 P2P_OPTIMIZED_COUNTRIES = sorted(list(set(P2P_OPTIMIZED_COUNTRIES)))
 
 def setup_nordvpn_settings():
-    """Sets initial NordVPN configuration for torrenting."""
+    """Sets initial NordVPN configuration for torrenting and Meshnet."""
     try:
+        # Check Meshnet status
+        settings_check = subprocess.run(['nordvpn', 'settings'], capture_output=True, text=True, timeout=30)
+        settings_output = settings_check.stdout.lower()
+        log.debug(f"Settings output: {settings_output}")  # Debug log of full output
+        if "meshnet: enabled" not in settings_output:
+            log.info("Meshnet is not enabled. Enabling Meshnet...")
+            subprocess.run(['nordvpn', 'set', 'meshnet', 'on'], check=True, capture_output=True, text=True)
+            time.sleep(5)  # Wait 5 seconds for Meshnet to enable
+            subprocess.run(['nordvpn', 'meshnet', 'peer', 'refresh'], check=True, capture_output=True, text=True)
+            log.info("Meshnet enabled and peers refreshed.")
+        else:
+            log.info("Meshnet is already enabled.")
+
         # Disabling these ensures they don't interfere with P2P or auto-connect logic
         subprocess.run(['nordvpn', 'set', 'killswitch', 'off'], check=True, capture_output=True, text=True)
         subprocess.run(['nordvpn', 'set', 'cybersec', 'off'], check=True, capture_output=True, text=True)
         subprocess.run(['nordvpn', 'set', 'autoconnect', 'off'], check=True, capture_output=True, text=True)
+        subprocess.run(['nordvpn', 'set', 'firewall', 'off'], check=True, capture_output=True, text=True)
         # Uncomment the line below if you specifically want UDP, generally good for torrents
         # subprocess.run(['nordvpn', 'set', 'protocol', 'udp'], check=True, capture_output=True, text=True)
         log.info("NordVPN initial settings configured.")
