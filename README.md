@@ -333,14 +333,6 @@ Therefore:
 - Consider implementing an independent network-level kill switch if required.
 - Test the configuration in a controlled environment before deploying it permanently.
 
-## 📁 Project Structure
-
-```text
-VPN-Switcher/
-│
-├── vpn_switcherV3.py
-└── README.md
-```
 
 ## 🎯 Project Purpose
 
