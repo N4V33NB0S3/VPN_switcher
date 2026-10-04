@@ -374,14 +374,8 @@ Use the project responsibly.
 
 ## 📜 License
 
-Add your preferred license here.
-
-For example:
-
-```text
-MIT License
-```
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 
 ---
 
-**Author:** N4V33NB0S3
+**Author:** Naveen Bose
